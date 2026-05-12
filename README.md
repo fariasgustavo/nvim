@@ -37,7 +37,25 @@ After installing, set the font in your terminal emulator.
 
 ---
 
-## 3. Install dependencies
+## 3. Configure iTerm2 (macOS only)
+
+This repo includes shared iTerm2 preferences with custom keybindings for Neovim integration (e.g., `Cmd+S` to save, pane navigation shortcuts).
+
+To apply them:
+
+```sh
+./iterm2/import.sh
+```
+
+Then restart iTerm2.
+
+> **Note:** This overwrites your current iTerm2 preferences. Back them up first if needed:
+> ```sh
+> defaults export com.googlecode.iterm2 ~/iterm2-backup.plist
+> ```
+---
+
+## 4. Install dependencies
 
 **macOS**
 ```sh
@@ -57,7 +75,7 @@ These cover:
 
 ---
 
-## 4. Clone this config
+## 5. Clone this config
 
 ```sh
 git clone https://github.com/fariasgustavo/nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}/nvim"
@@ -71,7 +89,7 @@ git clone https://github.com/fariasgustavo/nvim.git "${XDG_CONFIG_HOME:-$HOME/.c
 
 ---
 
-## 5. Launch Neovim
+## 6. Launch Neovim
 
 ```sh
 nvim
@@ -81,7 +99,7 @@ On first launch, [lazy.nvim](https://lazy.folke.io/) auto-installs all plugins. 
 
 ---
 
-## 6. Install LSP servers and tools via Mason
+## 7. Install LSP servers and tools via Mason
 
 Inside Neovim, run:
 
@@ -100,7 +118,7 @@ Mason installs binaries to `~/.local/share/nvim/mason/bin/` automatically.
 
 ---
 
-## 7. Install Treesitter parsers
+## 8. Install Treesitter parsers
 
 Inside Neovim:
 
