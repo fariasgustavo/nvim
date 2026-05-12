@@ -18,10 +18,37 @@ return {
   ---@module 'neo-tree'
   ---@type neotree.Config
   opts = {
+    default_component_configs = {
+      icon = {
+        folder_closed = "",
+        folder_open = "",
+        folder_empty = "",
+      },
+      git_status = {
+        symbols = {
+          added     = "✚",
+          modified  = "",
+          deleted   = "✖",
+          renamed   = "󰁕",
+          untracked = "",
+          ignored   = "",
+          unstaged  = "󰄱",
+          staged    = "",
+          conflict  = "",
+        },
+      },
+    },
     filesystem = {
+      use_libuv_file_watcher = true, -- Auto-refresh when files change externally
+      filtered_items = {
+        visible = true, -- Show hidden files by default
+        hide_dotfiles = false,
+        hide_gitignored = false,
+      },
       window = {
         mappings = {
           ['\\'] = 'close_window',
+          ['f'] = false, -- Disable 'f' filter/search to avoid conflict with FFF
         },
       },
     },
