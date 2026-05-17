@@ -39,7 +39,6 @@ return {
       },
     },
     filesystem = {
-      follow_current_file = { enabled = true },
       use_libuv_file_watcher = true, -- Auto-refresh when files change externally
       filtered_items = {
         visible = true, -- Show hidden files by default
@@ -50,12 +49,6 @@ return {
         mappings = {
           ['\\'] = 'close_window',
           ['f'] = false, -- Disable 'f' filter/search to avoid conflict with FFF
-          ['gf'] = function(state)
-            local node = state.tree:get_node()
-            if node.type ~= 'file' then return end
-            vim.cmd('edit ' .. vim.fn.fnameescape(node:get_id()))
-            vim.cmd('Neotree close')
-          end,
           ['gy'] = function(state)
             local node = state.tree:get_node()
             vim.fn.setreg('+', node:get_id())

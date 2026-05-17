@@ -1,0 +1,25 @@
+tags
+test.sh
+.luarc.json
+nvim
+.DS_Store
+
+# Neovim state/cache directories
+spell/
+undo/
+swap/
+backup/
+shada/
+log/
+.netrwhist
+
+# Compiled Lua
+*.luac
+plugin/packer_compiled.lua
+
+# Lazy.nvim lockfile
+# IMPORTANT: For a personal config, you SHOULD track lazy-lock.json
+# to ensure the exact same plugin versions on every machine.
+# If you are contributing to an upstream repo (like kickstart.nvim),
+# leave it ignored. For your own dotfiles, remove the line below.
+# lazy-lock.json

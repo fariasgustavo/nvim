@@ -178,7 +178,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Diagnostic Config & Keymaps
 -- See :help vim.diagnostic.Opts
 vim.diagnostic.config {
-  update_in_insert = true,
+  update_in_insert = false,
   severity_sort = true,
   float = { border = 'rounded', source = 'if_many' },
   underline = { severity = { min = vim.diagnostic.severity.WARN } },
@@ -192,15 +192,6 @@ vim.diagnostic.config {
 }
 
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-
-vim.o.updatetime = 1000
-
--- Show diagnostic float in insert mode when cursor pauses
-vim.api.nvim_create_autocmd('CursorHoldI', {
-  callback = function()
-    vim.diagnostic.open_float(nil, { focus = false })
-  end,
-})
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -421,7 +412,6 @@ require('lazy').setup({
           --  For example, in C this would take you to the header.
           map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
           map('m', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-          map('gf', vim.lsp.buf.implementation, '[G]oto Implementation')
 
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
@@ -563,14 +553,11 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        javascript = { 'prettierd', 'prettier', stop_after_first = true },
-        typescript = { 'prettierd', 'prettier', stop_after_first = true },
-        javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-        typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-        json = { 'prettierd', 'prettier', stop_after_first = true },
-        css = { 'prettierd', 'prettier', stop_after_first = true },
-        html = { 'prettierd', 'prettier', stop_after_first = true },
-        markdown = { 'prettierd', 'prettier', stop_after_first = true },
+        -- Conform can also run multiple formatters sequentially
+        -- python = { "isort", "black" },
+        --
+        -- You can use 'stop_after_first' to run the first available formatter from the list
+        -- javascript = { "prettierd", "prettier", stop_after_first = true },
       },
     },
   },
@@ -741,16 +728,6 @@ require('lazy').setup({
         return ' ' .. branch
       end
 
-      -- Show cwd (basename only) in the statusline
-      local orig_fileinfo = statusline.section_fileinfo
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_fileinfo = function(args)
-        local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
-        local default = orig_fileinfo(args or { trunc_width = 120 })
-        if cwd == '' then return default end
-        return ' ' .. cwd .. (default ~= '' and '  ' .. default or '')
-      end
-
       -- ... and there is more!
       --  Check out: https://github.com/nvim-mini/mini.nvim
     end,
@@ -880,15 +857,8 @@ vim.keymap.set({ 'n', 'v' }, '9', '$', { desc = 'Jump to end of line' })
 -- gb → jump back in jump list (e.g. after LSP navigation)
 vim.keymap.set('n', 'gb', '<C-o>', { desc = 'Jump back' })
 
--- Close quickfix list with Esc
-vim.keymap.set('n', '<Esc>', function()
-  if vim.fn.getqflist({ winid = 0 }).winid ~= 0 then
-    vim.cmd 'cclose'
-  else
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', false)
-  end
-end, { desc = 'Close quickfix or Esc' })
-
+-- gf → LSP go to implementation (overrides built-in "open file under cursor")
+vim.keymap.set('n', 'gf', vim.lsp.buf.implementation, { desc = 'Go to implementation' })
 
 -- Close quickfix with Esc
 vim.api.nvim_create_autocmd('FileType', {
