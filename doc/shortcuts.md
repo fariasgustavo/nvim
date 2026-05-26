@@ -100,6 +100,7 @@
 | Key | Action |
 |-----|--------|
 | `<C-s>` | Save file (normal, insert, visual) |
+| `<leader>y` | Copy entire file to clipboard |
 | `9` | Jump to end of line |
 | `<leader>f` | Format buffer (LSP / conform.nvim) |
 | `u` | Undo |

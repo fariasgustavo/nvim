@@ -874,8 +874,25 @@ vim.keymap.set('n', '<leader>tm', ':RenderMarkdown toggle<CR>', { desc = '[T]ogg
 -- Save file
 vim.keymap.set({ 'n', 'i', 'v' }, '<C-s>', '<cmd>write<CR>', { desc = 'Save file' })
 
+-- Copy entire file to clipboard
+vim.keymap.set('n', '<leader>y', ':%y+<CR>', { desc = 'Copy entire file' })
+
 -- Jump to end of line with 9
 vim.keymap.set({ 'n', 'v' }, '9', '$', { desc = 'Jump to end of line' })
+
+-- Prompt for a line number and jump to it
+vim.keymap.set('n', '<leader>j', function()
+  vim.ui.input({ prompt = 'Go to line: ' }, function(input)
+    local line = tonumber(input)
+    if line then
+      vim.api.nvim_win_set_cursor(0, { line, 0 })
+    end
+  end)
+end, { desc = 'Jump to line number' })
+
+-- Jump 10 rows up/down
+vim.keymap.set('n', '<Esc>jumpup', '10k', { desc = 'Jump 10 rows up' })
+vim.keymap.set('n', '<Esc>jumpdown', '10j', { desc = 'Jump 10 rows down' })
 
 -- gb → jump back in jump list (e.g. after LSP navigation)
 vim.keymap.set('n', 'gb', '<C-o>', { desc = 'Jump back' })
