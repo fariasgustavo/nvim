@@ -422,6 +422,7 @@ require('lazy').setup({
           map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
           map('m', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
           map('gf', vim.lsp.buf.implementation, '[G]oto Implementation')
+          map('gy', vim.lsp.buf.type_definition, '[G]oto T[y]pe Definition')
 
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
