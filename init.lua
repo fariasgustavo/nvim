@@ -419,6 +419,10 @@ require('lazy').setup({
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
+          map('grr', function()
+            vim.lsp.buf.references(nil, { includeDeclaration = false })
+            vim.defer_fn(function() vim.cmd 'copen' end, 100)
+          end, '[G]oto [R]eferences')
           map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
           map('m', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
           map('gf', vim.lsp.buf.implementation, '[G]oto Implementation')
@@ -897,6 +901,8 @@ vim.keymap.set('n', '<Esc>jumpdown', '10j', { desc = 'Jump 10 rows down' })
 
 -- gb → jump back in jump list (e.g. after LSP navigation)
 vim.keymap.set('n', 'gb', '<C-o>', { desc = 'Jump back' })
+-- gn → jump forward in jump list
+vim.keymap.set('n', 'gn', '<C-i>', { desc = 'Jump forward' })
 
 -- Close quickfix list with Esc
 vim.keymap.set('n', '<Esc>', function()
