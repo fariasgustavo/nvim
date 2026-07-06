@@ -25,4 +25,30 @@ return {
       },
     },
   },
+
+  -- AI code completion via virtual text
+  -- https://github.com/milanglacier/minuet-ai.nvim
+  {
+    'milanglacier/minuet-ai.nvim',
+    config = function()
+      require('minuet').setup {
+        provider = 'claude',
+        provider_options = {
+          claude = {
+            model = 'claude-sonnet-4-6',
+          },
+        },
+        virtualtext = {
+          auto_trigger_ft = { '*' },
+          keymap = {
+            accept = '<C-l>',
+            accept_line = '<A-a>',
+            prev = '<A-[>',
+            next = '<A-]>',
+            dismiss = '<A-e>',
+          },
+        },
+      }
+    end,
+  },
 }
